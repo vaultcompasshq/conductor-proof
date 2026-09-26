@@ -11,6 +11,9 @@ importers:
       dayjs:
         specifier: 1.11.13
         version: 1.11.13
+      fetch-retry-toolkit:
+        specifier: 2.1.0
+        version: 2.1.0
       nanoid:
         specifier: 6.0.1
         version: 6.0.1
@@ -20,6 +23,9 @@ packages:
   dayjs@1.11.13:
     resolution: {integrity: sha512-oaMBel6gjolK862uaPQOVTA7q3TZhuSvuMQAAglQDOWYO9A91IrAOUJEyKVlqJlHE0vq5p5UXxzdPfMH/x6xNg==}
 
+  fetch-retry-toolkit@2.1.0:
+    resolution: {integrity: sha512-8QVvxXwGzXGZ0/9Ct1Jz+GJgtjNq4Q5BqQqNfKqRfhBqwq0N5/E4M5s2Y4VYc5Yz4NqKfXqQxNfQpQ2xj3JJIg==}
+
   nanoid@6.0.1:
     resolution: {integrity: sha512-3wVS3i51pE2pi1k5FFL/95BGfVS0kSsvDVuGXHOtxox/TywUmtgq+3qiTOTbs9J7KfHaXPiN171k/A6dBnaXFw==}
     engines: {node: ^22 || ^24 || >=26}
@@ -28,5 +34,7 @@ packages:
 snapshots:
 
   dayjs@1.11.13: {}
+
+  fetch-retry-toolkit@2.1.0: {}
 
   nanoid@6.0.1: {}

@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "packageManager": "pnpm@9.15.9",
   "description": "Demo repository: an ordinary security job next to conductor, on planted pull requests left open.",
   "scripts": {
     "test": "node --test",

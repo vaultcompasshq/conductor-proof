@@ -1,0 +1,54 @@
+# Guardrail policy. One file for every gate this repository runs.
+#
+# Gates are keyed by the ROLE they fill, and the product filling that role
+# is one line inside it. Swapping or renaming a product is a one-line edit
+# rather than a rename of the key your CI reads.
+#
+# There is deliberately no shared severity threshold. Each gate keeps its
+# own, spelled the way that gate spells it, inside its own options block.
+#
+# stage says when a gate runs: commit, push, or ci. Stages are cumulative,
+# so a gate runs at its own stage and at every later one, and a run at ci
+# runs everything enabled. The values below are the defaults.
+#
+# enforce says whether a gate can change the exit code. A gate with
+# enforce: false runs and reports exactly as an enforced one does and
+# never fails the run, which is how a gate is adopted before anybody is
+# ready to have it refuse a commit. It is written out below for every
+# gate, for the same reason stage is: a default that lives only in the
+# parser is a default nobody can find.
+version: 1
+
+gates:
+  # what comes in: hallucinated names, typosquats, tampered lockfile entries
+  dependencies:
+    product: dep-guard
+    enabled: true
+    stage: commit
+    enforce: true
+    # Handed to this gate unchanged. Keys are its own long flags,
+    # without the leading dashes. Example: fail-on: high
+    options: {}
+  # what goes out: credentials about to be committed
+  secrets:
+    product: vault-guard
+    enabled: true
+    stage: commit
+    enforce: true
+    # Handed to this gate unchanged. Keys are its own long flags,
+    # without the leading dashes. Example: fail-on: high
+    options: {}
+  # what was approved: drift from a frozen intent contract, and change budgets
+  intent:
+    product: intent-guard
+    enabled: true
+    stage: ci
+    # It runs and reports in CI without failing the run. Flip it to
+    # true once a few pull requests show the signal is worth blocking on.
+    enforce: false
+    # Handed to this gate unchanged. Keys are its own long flags,
+    # without the leading dashes. Example: fail-on: high
+    options: {}
+
+report:
+  format: text

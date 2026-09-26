@@ -1,0 +1,22 @@
+name: guardrails-advisory
+on: pull_request
+
+jobs:
+  gates:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22.11.0'
+      - id: conductor
+        timeout-minutes: 5
+        uses: vaultcompasshq/conductor@7db96a7f6da85eec80153c10d8365b71bb226278 # v0.4.7
+        with:
+          pr-comment: true
+          advisory: true

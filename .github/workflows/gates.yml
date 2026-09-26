@@ -1,4 +1,4 @@
-name: guardrails-advisory
+name: guardrails
 on: pull_request
 
 jobs:
@@ -19,4 +19,3 @@ jobs:
         uses: vaultcompasshq/conductor@7db96a7f6da85eec80153c10d8365b71bb226278 # v0.4.7
         with:
           pr-comment: true
-          advisory: true

@@ -2,5 +2,6 @@ node_modules/
 .local/
 .claude/
 .guardrails/manifest.json
+.intent-guard/drift-log.jsonl
 *.sarif
 conductor.txt

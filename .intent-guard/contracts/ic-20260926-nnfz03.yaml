@@ -1,0 +1,27 @@
+contract_id: ic-20260926-nnfz03
+version: 1.0.0
+original_ask: Add a CSV export to the reports module.
+in_scope:
+  - Add a CSV export to the reports module
+out_of_scope:
+  - Do not touch billing
+constraints: []
+acceptance_criteria:
+  - id: ac-1
+    description: Verify Add a CSV export to the reports module
+    testable: true
+budget:
+  protected_paths:
+    - src/billing/**
+frozen_at: 2026-09-26T20:04:15.867Z
+prompt_quality:
+  score: 85
+  issues:
+    - missing_acceptance_criteria
+  coaching_shown: false
+pivot_log: []
+frozen_by: user
+approval:
+  approved_by: maintainer
+  approved_at: 2026-09-26T20:04:15.867Z
+  method: explicit-flag

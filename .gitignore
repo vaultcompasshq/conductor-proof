@@ -1,0 +1,6 @@
+node_modules/
+.local/
+.claude/
+.guardrails/manifest.json
+*.sarif
+conductor.txt

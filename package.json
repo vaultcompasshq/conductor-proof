@@ -1,0 +1,15 @@
+{
+  "name": "conductor-proof",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Demo repository: an ordinary security job next to conductor, on planted pull requests left open.",
+  "scripts": {
+    "test": "node --test",
+    "lint": "node scripts/check-public-hygiene.mjs"
+  },
+  "dependencies": {
+    "dayjs": "1.11.13",
+    "nanoid": "6.0.1"
+  }
+}

@@ -42,9 +42,9 @@ repository, enforced by a ruleset on main.
 The secret-in-fixture row is honest parity: both systems catch a real
 credential shape, gitleaks under its generic-api-key rule and
 vault-guard under its own vendor-anchored one, and conductor claims no
-special credit there. That row also is not the Stripe key the
-maintainer originally asked for. A synthetic `sk_live_` string, a
-`sk_test_` string, and a synthetic Figma token were all rejected by
+special credit there. That row was going to be a Stripe-shaped key.
+A synthetic `sk_live_` string, a `sk_test_` string, and a synthetic
+Figma token were all rejected by
 GitHub's own free push protection for public repositories before any
 of those commits could reach the remote at all. The Doppler-shaped
 token committed instead is not on that partner list and still trips

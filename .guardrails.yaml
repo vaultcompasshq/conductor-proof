@@ -49,6 +49,24 @@ gates:
     # Handed to this gate unchanged. Keys are its own long flags,
     # without the leading dashes. Example: fail-on: high
     options: {}
+  # what history carries: a credential committed once and removed later
+  secrets-history:
+    product: gitleaks
+    enabled: true
+    stage: ci
+    enforce: true
+    # Handed to this gate unchanged. Keys are its own long flags,
+    # without the leading dashes. Example: fail-on: high
+    options: {}
+  # what a resolved dependency carries: a published vulnerability
+  vulnerabilities:
+    product: osv-scanner
+    enabled: true
+    stage: ci
+    enforce: true
+    # Handed to this gate unchanged. Keys are its own long flags,
+    # without the leading dashes. Example: fail-on: high
+    options: {}
 
 report:
   format: text

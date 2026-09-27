@@ -43,7 +43,7 @@ main.
 | [proof/edits-its-own-gate](https://github.com/vaultcompasshq/conductor-proof/pull/7) | Turns off the security job and the dependencies gate, then adds the same missing package | skipped (the job set `if: false` on itself) | fail | `1 control change(s) proposed in this pull request` and `dep-guard/unknown-package fetch-retry-toolkit` still caught |
 | [proof/secret-in-fixture](https://github.com/vaultcompasshq/conductor-proof/pull/8) | Adds a synthetic credential-shaped string to a test fixture | fail | fail | `vault-guard/doppler-token tests/fixtures/config.json:2:27` |
 | [proof/outside-the-contract](https://github.com/vaultcompasshq/conductor-proof/pull/11) | Edits src/billing/charge.js, outside the frozen intent contract | pass | fail | `intent-guard/budget.protected_paths src/billing/charge.js` |
-| [proof/secret-in-history](https://github.com/vaultcompasshq/conductor-proof/pull/15) | Adds a synthetic credential-shaped string, then deletes it in the next commit, so only history carries it | fail | fail | `verdict: exit 2, the trust base "origin/main" could not be used, so no gate ran and nothing here is a result of any kind.` |
+| [proof/secret-in-history](https://github.com/vaultcompasshq/conductor-proof/pull/15) | Adds a synthetic credential-shaped string, then replaces it with a placeholder, so only history carries it | fail | fail | `gitleaks/generic-api-key tests/fixtures/history-secret.json:2:5` from the secrets-history gate; vault-guard, reading the tree, reports nothing |
 | [proof/vulnerable-dependency](https://github.com/vaultcompasshq/conductor-proof/pull/16) | Adds lodash 4.17.20, a version with a known advisory | fail | fail | `osv-scanner/GHSA-29mw-wpgm-hmr9 lodash (pnpm-lock.yaml)` |
 
 The secret-in-fixture row is honest parity: both systems catch a real
@@ -62,21 +62,20 @@ job with `if: false`, not a passing run; a merge is not blocked by it
 either way, which is the point of the plant. Read the checks tab on
 each pull request yourself rather than trusting this table.
 
-proof/secret-in-history did not end up proving the row it set out to
-prove. Adding the credential-shaped string in one commit and deleting
-it in the next leaves the head tree byte for byte identical to main's,
-and conductor has its own safety check for exactly that shape: a base
-ref that carries the same tree as the commit being judged, which is
-what a pull request whose base has not moved looks like too. Rather
-than let the policy come from a tree it cannot tell apart from the one
-under judgment, conductor refuses outright, exit 2, before any gate
-including secrets-history gets to run. The ordinary gitleaks job has
-no such check, reads history the way it always does, and still finds
-the token. So the row still shows a real difference between the two
-jobs, just not the one it was planted to show: gitleaks in history
-mode does its job regardless, and conductor's own base-ref guard,
-built to stop a pull request from picking its own rules, fires on a
-branch that never tried to.
+proof/secret-in-history is parity as well, and it took three commits to
+get there. The first two added the credential-shaped string and then
+deleted the file, which left the head tree byte for byte identical to
+main's. conductor has a safety check for exactly that shape: a base ref
+carrying the same tree as the commit being judged is what a pull request
+that picks its own rules looks like, so it refuses to run at all, exit
+2, before any gate including secrets-history gets a turn. The ordinary
+gitleaks job has no such check and found the token in that shape. A real
+leak rarely ends with the tree back where it started, so a third commit
+brought the fixture back with a placeholder where the value was, and
+conductor's history gate then reported the token from the branch's
+history while vault-guard, which reads the tree, saw nothing. The
+empty-diff shape is filed on conductor as
+[issue 69](https://github.com/vaultcompasshq/conductor/issues/69).
 
 proof/vulnerable-dependency passes conductor's dep-guard gate, which is
 expected and not a miss: dep-guard checks whether a dependency name

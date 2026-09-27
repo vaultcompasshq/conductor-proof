@@ -43,9 +43,27 @@ gates:
     product: intent-guard
     enabled: true
     stage: ci
-    # It runs and reports in CI without failing the run. Flip it to
-    # true once a few pull requests show the signal is worth blocking on.
-    enforce: false
+    # A few pull requests have now shown the report reads the way we
+    # expect, so this is enforced rather than advisory.
+    enforce: true
+    # Handed to this gate unchanged. Keys are its own long flags,
+    # without the leading dashes. Example: fail-on: high
+    options: {}
+  # what history carries: a credential committed once and removed later
+  secrets-history:
+    product: gitleaks
+    enabled: true
+    stage: ci
+    enforce: true
+    # Handed to this gate unchanged. Keys are its own long flags,
+    # without the leading dashes. Example: fail-on: high
+    options: {}
+  # what a resolved dependency carries: a published vulnerability
+  vulnerabilities:
+    product: osv-scanner
+    enabled: true
+    stage: ci
+    enforce: true
     # Handed to this gate unchanged. Keys are its own long flags,
     # without the leading dashes. Example: fail-on: high
     options: {}

@@ -18,7 +18,7 @@ project was supposed to change.
 
 ## conductor
 
-`gates.yml` runs conductor 0.5.0, which runs dep-guard, vault-guard,
+`gates.yml` runs conductor 0.6.0, which runs dep-guard, vault-guard,
 intent-guard, gitleaks and osv-scanner from one policy file,
 `.guardrails.yaml`, committed on main. dep-guard checks whether a new
 dependency is a real, known package. vault-guard checks for
@@ -76,6 +76,10 @@ conductor's history gate then reported the token from the branch's
 history while vault-guard, which reads the tree, saw nothing. The
 empty-diff shape is filed on conductor as
 [issue 69](https://github.com/vaultcompasshq/conductor/issues/69).
+conductor 0.6.0 fixed that shape, so the first two commits of that pull
+request would now run the history gate and report the other gates as
+tree-unchanged, and the third commit stays because the table row was
+recorded against it.
 
 proof/vulnerable-dependency passes conductor's dep-guard gate, which is
 expected and not a miss: dep-guard checks whether a dependency name

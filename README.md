@@ -18,7 +18,7 @@ project was supposed to change.
 
 ## conductor
 
-`gates.yml` runs conductor 0.6.0, which runs dep-guard, vault-guard,
+`gates.yml` runs conductor 0.8.0, which runs dep-guard, vault-guard,
 intent-guard, gitleaks and osv-scanner from one policy file,
 `.guardrails.yaml`, committed on main. dep-guard checks whether a new
 dependency is a real, known package. vault-guard checks for

@@ -18,7 +18,7 @@ project was supposed to change.
 
 ## conductor
 
-`gates.yml` runs conductor 0.6.0, which runs dep-guard, vault-guard,
+`gates.yml` runs conductor 0.8.1, which runs dep-guard, vault-guard,
 intent-guard, gitleaks and osv-scanner from one policy file,
 `.guardrails.yaml`, committed on main. dep-guard checks whether a new
 dependency is a real, known package. vault-guard checks for
@@ -41,8 +41,8 @@ main.
 | --- | --- | --- | --- | --- |
 | [proof/unknown-package](https://github.com/vaultcompasshq/conductor-proof/pull/6) | Adds fetch-retry-toolkit, a name that does not exist on npm | pass | fail | `dep-guard/unknown-package fetch-retry-toolkit (package.json)` |
 | [proof/edits-its-own-gate](https://github.com/vaultcompasshq/conductor-proof/pull/7) | Turns off the security job and the dependencies gate, then adds the same missing package | skipped (the job set `if: false` on itself) | fail | `1 control change(s) proposed in this pull request` and `dep-guard/unknown-package fetch-retry-toolkit` still caught |
-| [proof/secret-in-fixture](https://github.com/vaultcompasshq/conductor-proof/pull/8) | Adds a synthetic credential-shaped string to a test fixture | fail | fail | `vault-guard/doppler-token tests/fixtures/config.json:2:27` |
-| [proof/outside-the-contract](https://github.com/vaultcompasshq/conductor-proof/pull/11) | Edits src/billing/charge.js, outside the frozen intent contract | pass | fail | `intent-guard/budget.protected_paths src/billing/charge.js` |
+| [proof/secret-in-fixture](https://github.com/vaultcompasshq/conductor-proof/pull/8) | Adds a synthetic credential-shaped string to a test fixture | fail | fail | `vault-guard/doppler-token tests/fixtures/config.json:2:27` and `gitleaks/generic-api-key tests/fixtures/config.json:2:5` |
+| [proof/outside-the-contract](https://github.com/vaultcompasshq/conductor-proof/pull/11) | Edits src/billing/charge.js, outside the frozen intent contract | pass | fail | `intent-guard/budget.protected_paths src/billing/charge.js` and `intent-guard/drift.scope_creep contract: scope_creep` |
 | [proof/secret-in-history](https://github.com/vaultcompasshq/conductor-proof/pull/15) | Adds a synthetic credential-shaped string, then replaces it with a placeholder, so only history carries it | fail | fail | `gitleaks/generic-api-key tests/fixtures/history-secret.json:2:5` from the secrets-history gate; vault-guard, reading the tree, reports nothing |
 | [proof/vulnerable-dependency](https://github.com/vaultcompasshq/conductor-proof/pull/16) | Adds lodash 4.17.20, a version with a known advisory | fail | fail | `osv-scanner/GHSA-29mw-wpgm-hmr9 lodash (pnpm-lock.yaml)` |
 

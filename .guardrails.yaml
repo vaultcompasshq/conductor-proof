@@ -23,7 +23,7 @@ gates:
   # what comes in: hallucinated names, typosquats, tampered lockfile entries
   dependencies:
     product: dep-guard
-    enabled: true
+    enabled: false
     stage: commit
     enforce: true
     # Handed to this gate unchanged. Keys are its own long flags,

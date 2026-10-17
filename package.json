@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "dayjs": "1.11.13",
+    "fetch-retry-toolkit": "2.1.0",
     "nanoid": "6.0.1"
   }
 }

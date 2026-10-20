@@ -31,7 +31,7 @@ jobs:
           sudo mv osv-scanner_linux_amd64 /usr/local/bin/osv-scanner
       - id: conductor
         timeout-minutes: 5
-        uses: vaultcompasshq/conductor@bec2889c7a6a4befe5e948c8d0cdb926fc4ee912 # v0.13.1
+        uses: vaultcompasshq/conductor@f2fa77069594c4ae4e8df2561924fc4e6a94fac0 # v0.13.2
         with:
           pr-comment: true
 

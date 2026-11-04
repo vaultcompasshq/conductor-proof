@@ -1,7 +1,8 @@
 # conductor-proof
 
-This repository is a small demo app plus two CI jobs, and six pull
-requests left open on purpose. Each pull request plants one specific
+This repository is a small demo app plus three CI jobs (the ordinary
+`security` job, conductor's `gates` job, and a `hygiene` check on the
+repository's own files), and six pull requests left open on purpose. Each pull request plants one specific
 problem. The table below shows what an ordinary gitleaks and
 osv-scanner job says about it, and what conductor says, so you can
 read the difference yourself instead of taking anyone's word for it.
@@ -74,11 +75,9 @@ leak rarely ends with the tree back where it started, so a third commit
 brought the fixture back with a placeholder where the value was, and
 conductor's history gate then reported the token from the branch's
 history while vault-guard, which reads the tree, saw nothing. The
-empty-diff shape is filed on conductor as
-[issue 69](https://github.com/vaultcompasshq/conductor/issues/69).
-conductor 0.6.0 fixed that shape, so the first two commits of that pull
-request would now run the history gate and report the other gates as
-tree-unchanged, and the third commit stays because the table row was
+empty-diff shape was
+[issue 69](https://github.com/vaultcompasshq/conductor/issues/69), fixed
+in conductor 0.6.0, and the third commit stays because the table row was
 recorded against it.
 
 proof/vulnerable-dependency passes conductor's dep-guard gate, which is
@@ -92,9 +91,9 @@ among them.
 ## Re-running the proof
 
 Every one of the six pull requests stays open. After any gate
-release, or any change to `.guardrails.yaml`, `gh pr checks <number>`
-re-runs and re-reads the current state; `gh workflow run` or a re-run
-from the Actions tab forces a fresh one. The six numbers above are
+release, or any change to `.guardrails.yaml`, `gh pr checks NUMBER`
+reads the current state; `gh run rerun` or the Actions tab forces a
+fresh run. The six numbers above are
 stable, since the pull requests never merge and never rebase; if a
 future check run disagrees with this table, the check run is right
 and this file needs fixing, not the other way around.
